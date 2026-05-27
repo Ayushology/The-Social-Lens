@@ -18,7 +18,10 @@ async function generateCaption(base64Data, mimeType) {
 
     const response = await ai.models.generateContent({
         model: "gemini-2.5-flash",
-        contents: contents
+        contents: contents,
+      config: {
+            systemInstruction: "You are a precise social media automation backend. Your task is to look at the image and output ONLY one single, clean caption string with a few relevant hashtags. Do NOT provide multiple options, do NOT provide labels, do NOT provide introductory text, and absolutely ensure the entire output is under 250 characters so it fits database limits."
+        }
     });
 
     return response.text;
