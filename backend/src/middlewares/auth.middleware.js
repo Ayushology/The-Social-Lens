@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const User = require('../models/user.model')
 async function authMiddleware(req,resp,next){
-    const {token} = req.cookies.token
+    const token = req.cookies.token
     if(!token){
         return resp.status(401).json({
             message : "Invalid User"
