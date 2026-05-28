@@ -1,11 +1,13 @@
 const postModel = require("../models/post.model");
 const generateCaption = require("../services/ai.service");
-
-async function createPostController(req, res) {
+const uploadToImageKit = require('../services/storage.service')
+const {v4 : uuidv4} = require('uuid')
+async function createPostController(req, resp) {
     try {
         const file = req.file;
-        if (!file) {
-            return res.status(400).json({ success: false, message: "No image file received" });
+        if(!file){
+            return resp.status(400).json(
+            { success: false, message: "No image file received" });
         }
 
         console.log("File received:", file.originalname);
@@ -17,22 +19,29 @@ async function createPostController(req, res) {
         const caption = await generateCaption(base64Image, file.mimetype);
         console.log("Generated caption:", caption);
 
-       
+        const uniqueName = `${uuidv4()}-${file.originalname}`;
+
+
+        console.log("Uploading file buffer to ImageKit cloud bucket...");
+        const result = await uploadToImageKit(file.buffer, uniqueName);
+        console.log("ImageKit upload successful! Destination URL:", result.url);
+        
         const newPost = await postModel.create({
-            image: "uploaded_via_postman_buffer",
+            image: result.url,
             caption: caption,
-            user: req.user?._id || null
+          user: req.user ? req.user._id : null
         });
 
-        return res.status(201).json({
+        return resp.status(201).json({
             success: true,
             message: "Post created successfully with AI caption!",
+            caption: caption,
             post: newPost
         });
 
     } catch (error) {
         console.error("Controller Error:", error.message);
-        return res.status(500).json({ 
+        return resp.status(500).json({ 
             success: false, 
             message: "Server failed to process post", 
             error: error.message 
