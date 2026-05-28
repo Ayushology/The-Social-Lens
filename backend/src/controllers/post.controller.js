@@ -9,7 +9,7 @@ async function createPostController(req, resp) {
             return resp.status(400).json(
             { success: false, message: "No image file received" });
         }
-
+        //originalName is inbuilt multer prop
         console.log("File received:", file.originalname);
 
        
