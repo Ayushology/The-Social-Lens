@@ -88,14 +88,14 @@ const CaptionDashboard = ({ captionData, previewUrl }) => {
           </div>
 
           {/* Right Column: Beautiful Instagram Mockup */}
-          <div className="w-full lg:w-[360px] shrink-0">
+          <div className="w-full lg:w-90 shrink-0">
             <h3 className="text-sm font-medium text-zinc-500 mb-4 tracking-wider uppercase">Instagram Preview</h3>
             
             <div className="bg-zinc-950 rounded-2xl border border-zinc-800 overflow-hidden shadow-2xl">
               {/* Post Header */}
               <div className="p-3 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-400 to-rose-500 p-[2px]">
+                  <div className="w-8 h-8 rounded-full bg-linear-to-tr from-amber-400 to-rose-500 p-0.5">
                     <div className="w-full h-full rounded-full bg-zinc-900 flex items-center justify-center text-xs font-bold text-zinc-400">
                       {username[0].toUpperCase()}
                     </div>
@@ -132,7 +132,7 @@ const CaptionDashboard = ({ captionData, previewUrl }) => {
                 <p className="text-sm font-semibold text-zinc-200 mb-1">1,234 likes</p>
                 <div className="text-sm text-zinc-300 leading-relaxed">
                   <span className="font-semibold text-zinc-200 mr-2">{username}</span>
-                  <span className="break-words">{currentCaption}</span>
+                  <span className="wrap-break-word">{currentCaption}</span>
                 </div>
                 <p className="text-xs text-zinc-500 mt-2 uppercase">Just now</p>
               </div>
