@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const AUTH_STORAGE_KEY = 'captiongen_auth'
+const AUTH_STORAGE_KEY = 'social_lens_auth'
 
 const client = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',

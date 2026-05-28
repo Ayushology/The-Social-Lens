@@ -43,7 +43,8 @@ function Create() {
       const { data } = await client.post('/posts', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
-      setPost(data)
+      // 💡 FIX: Target the exact 'post' document from the backend JSON wrapper
+      setPost(data.post) 
     } catch (err) {
       setError(err.response?.data?.message || 'Caption generation failed.')
     } finally {
@@ -100,12 +101,15 @@ function Create() {
             </div>
           ) : post ? (
             <>
-              <img src={post.imageUrl} alt={post.caption} />
+              {/* 💡 FIX: Use post.image to match your Mongoose schema */}
+              <img src={post.image} alt={post.caption} />
               <div>
                 <p className="caption-text">{post.caption}</p>
-                <time dateTime={post.createdAt}>
-                  {new Date(post.createdAt).toLocaleString()}
-                </time>
+                {post.createdAt && (
+                  <time dateTime={post.createdAt}>
+                    {new Date(post.createdAt).toLocaleString()}
+                  </time>
+                )}
               </div>
             </>
           ) : (
